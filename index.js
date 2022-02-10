@@ -118,10 +118,39 @@ client.connect(err => {
         );
         res.json(result);
     });
+
+
+    app.put("/updateStudent/:id", async (req, res) => {
+        const id = req.params.id;
+        const updateBody = req.body;
+        const filter = { _id: ObjectId(id) };
+        const updateDoc = {
+            $set: {
+                fullName: updateBody.fullName,
+                age: updateBody.age,
+                roll: updateBody.roll,
+                class: updateBody.class,
+                hall: updateBody.hall,
+                status: updateBody.status
+            },
+        };
+        const result = await studentCollection.updateOne(
+            filter,
+            updateDoc,
+        );
+        res.json(result);
+    });
+
     //remove order
     app.delete('/removeStudent/:id', async (req, res) => {
         const id = req.params.id;
         const result = await studentCollection.deleteOne({ _id: ObjectId(id) });
+        res.json(result);
+    })
+
+    app.delete('/removeFood/:id', async (req, res) => {
+        const id = req.params.id;
+        const result = await foodCollection.deleteOne({ _id: ObjectId(id) });
         res.json(result);
     })
 
