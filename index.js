@@ -3,7 +3,7 @@ const cors = require("cors");
 require('dotenv').config();
 const ObjectId = require('mongodb').ObjectId;
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 const { MongoClient } = require('mongodb');
 
 app.use(cors());
@@ -76,7 +76,6 @@ client.connect(err => {
             size = 5
         }
         const count = await studentCollection.find({}).count();
-        console.log(count);
         const limit = parseInt(size)
         const skip = page * size;
         const result = await studentCollection.find({}, { limit: limit, skip: skip }).toArray();
